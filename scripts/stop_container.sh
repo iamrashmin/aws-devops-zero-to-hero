@@ -1,16 +1,18 @@
 #!/bin/bash
 set -e
 
-# Stop and delete running containers (if any)
-echo "Stopping and removing all running containers..."
+echo "Starting stop_container.sh script..."
 
-# Get the list of container IDs
-containerIds=$(docker ps -q)
+# Fetch running container IDs
+containerId=$(docker ps -q)
 
-if [ -z "$containerIds" ]; then
-  echo "No running containers to remove."
+# Debug: Print the retrieved container IDs
+echo "Retrieved container IDs: '$containerId'"
+
+if [ -z "$containerId" ]; then
+  echo "No running containers to stop."
 else
-  # Remove all running containers forcefully
-  docker rm -f $containerIds
-  echo "Containers removed successfully."
+  echo "Stopping and removing container(s): $containerId"
+  docker rm -f $containerId
+  echo "Container(s) stopped and removed successfully."
 fi
